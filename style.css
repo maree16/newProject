@@ -1,0 +1,677 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  ---------------------------------------------
+    /* | difference between * and html in css| */
+    ---------------------------------------------
+    /*  * is any element, so it does contain html. But html does not contain all elements, just html.
+  
+  If the snippet for html {} is specific to the HTML element in your markup, then keep it like that. But if it should be applied to all elements, then you can change it to *.
+  
+  --------------------------------------------
+  */
+    /* 
+  
+    ^|Set font size for easy rem calculations 
+  --------------------------------------------
+  credited to @lasjorg
+  --------------------------------------------
+  * default document font size = 16px, 1rem = 16px, 100% = 16px
+     * (100% / 16px) * 10 = 62.5%, 1rem = 10px, 62.5% = 10px
+  
+  
+  /* A few media query to set some font sizes at different screen sizes.
+   * This helps automate a bit of responsiveness.
+   * The trick is to use the rem unit for size values, margin and padding.
+   * Because rem is relative to the document font size
+   * when we scale up or down the font size on the document
+   * it will affect all properties using rem units for the values.
+  */
+    /* I am using the em unit for breakpoints
+   * The calculation is the following
+   * screen size divided by browser base font size
+   * As an example: a breakpoint at 980px
+   * 980px / 16px = 61.25em
+  
+  /* A few media query to set some font sizes at different screen sizes.
+   * This helps automate a bit of responsiveness.
+   * The trick is to use the rem unit for size values, margin and padding.
+   * Because rem is relative to the document font size
+   * when we scale up or down the font size on the document
+   * it will affect all properties using rem units for the values.
+  
+  * I am using the em unit for breakpoints
+   * The calculation is the following
+   * screen size divided by browser base font size
+   * As an example: a breakpoint at 980px
+   * 980px / 16px = 61.25em
+  
+  --------------------------------------------
+  border-box property helps to style elements 
+  --------------------------------------------
+  This will give you the same result, and make it easier to change the box-sizing in plugins or other components that leverage other behavior.
+  
+  to read more 
+  https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+  
+  */
+    *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Fira Sans Extra Condensed", sans-serif;
+    font-size: 2rem;
+    --nav-load-time: 300ms;
+    --nav-link-load-time: 500ms;
+    --article-time-load: calc(var(--nav-load-time) + var(--nav-link-load-time));
+  }
+  
+  header {
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    opacity: 0.9;
+    width: 100%;
+    text-decoration: none;
+    height: auto;
+    z-index: 1;
+  }
+  nav {
+    animation: nav-load var(--nav-load-time) ease-in;
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style: none;
+  }
+  nav ul li {
+    border: 2px solid #000000;
+    padding: 24px 10px 0 10px;
+    text-transform: capitalize;
+    height: 50px;
+    width: 14%;
+    text-align: center;
+    animation: nav-link-load;
+    animation-duration: var(--nav-link-load-time);
+    animation-timing-function: ease-in;
+    animation-delay: var(--nav-load-time);
+    animation-fill-mode: forwards;
+  
+    transform: scale(0);
+  }
+  
+  .headerlinks {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 20px 20px;
+  }
+  nav ul li:nth-child(1) {
+    background: #7B241C;
+    animation-name: nav-first-link;
+    transform: translateX(-1000%);
+  }
+  
+  nav ul li:nth-child(2) {
+    background: #7b241c;
+  }
+  
+  nav ul li:nth-child(3) {
+    background: #7b241c;
+    animation-name: nav-last-link;
+    transform: translateX(1000%);
+  }
+  nav ul li:hover {
+    background-color: #ffffff44;
+    color: #000000;
+    border-bottom: 0px;
+  }
+  .headerlinks:hover {
+    color: #000000;
+  }
+  @keyframes nav-load {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes nav-link-load {
+    0% {
+      transform: scale(0);
+    }
+  
+    90% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes nav-first-link {
+    0% {
+      transform: translateX(-1000%);
+    }
+  
+    90% {
+      transform: translateX(50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes nav-last-link {
+    0% {
+      transform: translateX(1000%);
+    }
+  
+    90% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  h1 {
+    animation: article-load 300ms ease-in var(--article-time-load);
+    animation-fill-mode: forwards;
+    transform: translateY(-20px);
+    opacity: 0;
+    margin-bottom: 20px;
+    font-size: 3rem;
+  }
+  
+  
+  @keyframes article-load {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+  
+  #wrapper {
+    width: auto;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  #welcome-section {
+    background: radial-gradient(ellipse at bottom, #1b2735 25%, #090a0f 100%);
+    color: #ffffff;
+    width: auto;
+    height: 100vh;
+    font-family: inherit;
+    overflow: hidden;
+    position: relative;
+    
+  }
+  
+  .ball {
+    opacity: 0.5;
+    border-radius: 100%;
+    position: absolute;
+    -webkit-box-shadow: 0 0 10px #ffd700;
+    box-shadow: 0 0 10px #ffd700;
+  }
+  
+  #text {
+    margin-top: 3%;
+    background: #000000;
+    border: 3px solid #000000;
+    color: #c0c0c0;
+    padding: 2.5%;
+    text-align: center;
+    z-index: 1;
+    font-size: 2rem;
+  }
+  
+  #text span {
+    color: #da2c43;
+    text-decoration: underline;
+  }
+  
+  .container {
+    margin:7% auto auto 22%;
+    box-sizing: border-box;
+    width: 45%;
+    height: 44%;
+    position: relative;
+    padding: 5%;
+    
+  }
+  
+  #card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 4%;
+  }
+  
+  #card #flipy {
+    width: auto;
+    height: auto;
+    transform: rotateY(180deg);
+    display: none;
+    margin-top: 15px;
+    background: #000000;
+    border: 3px solid #000000;
+    color: #c0c0c0;
+    padding: 5%;
+    text-align: justify;
+    z-index: 1;
+    font-size: 1.8rem;
+    text-decoration: capitalize;
+    border-radius: 4%;
+    overflow: auto;
+  }
+  
+  #card #flipy h2 {
+    text-align: center;
+    color: #da2c43;
+    text-decoration: underline;
+  }
+  
+  #card.flipped {
+    transform: rotateY(180deg);
+  
+  }
+  
+  
+  #flipback,#flip {
+    padding: 1em;
+    margin-top: 36px;
+    font-family: inherit;
+    font-weight: bold;
+    border: 1px solid #da2c43;
+    background: #da2c43;
+    color: #ffffff;
+    cursor: point;
+    border-radius: 2px;
+  }
+  
+  #flip:hover,
+  #flipback:hover {
+    padding: 1.2em;
+    margin-top: 36px;
+    font-family: inherit;
+    font-weight: bold;
+    border: 2px solid #da2c43;
+    background: #ffffff;
+    color: #da2c43;
+    cursor: point;
+    border-radius: 2px;
+  }
+  
+  #projects {
+    height: auto;
+    background:  #1f618d ;
+    font-family: inherit;
+    font-weight: bold;
+    color: #000000;
+    display: block;
+    padding-top: 100px;
+    text-align: center;
+  }
+  #projects h2 {
+    text-shadow: 2px 2px 8px #c0c0c0;
+  }
+  #flex-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  
+  .project-tile {
+    height: 68vh;
+    width: 20vw;
+    padding: 14px;
+    border: 2px solid #aaa;
+    margin: auto auto 40px auto;
+    box-sizing: border-box;
+    overflow: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+    border-radius: 10px;
+  }
+  
+  .project-tile:hover {
+    height: 68vh;
+    width: 20.1vw;
+    padding: 14px;
+    border: 2px solid #aaa;
+    margin: auto auto 40px auto;
+    box-sizing: border-box;
+    overflow: hidden;
+    /*
+    -moz-box-shadow: 8px 8px 5px #5dade2;
+    -webkit-box-shadow: 8px 8px 5px #5dade2;*/
+    box-shadow: 8px 8px 5px #c0c0c0;
+    border-radius: 10px;
+  }
+  
+  .project-tile a {
+    text-decoration: none;
+    font-family: inherit;
+    color: #000000;
+    text-shadow: 2px 2px 8px #AAA;
+    font-size: 1.5rem;
+  }
+  
+  
+  figure {
+    width: 100%;
+    height: 100%;
+    }
+    
+  figure img {
+    width: 100%;
+    height: 86%;
+  }
+    .project-tile h3 {
+    font-size: 75%;
+     margin-top: -32px;
+      
+    }
+    
+    
+  #footerdiv {
+    display: block;
+    position: sticky;
+    height: 420px;
+    width: 100%;
+    background: #FFFFFF; 
+    color: #000000;
+    text-align: center;
+    padding: 20px 60px 0 60px;
+    font-family: inherit;
+    font-weight: bold;
+    box-sizing: border-box;
+    
+  }
+  
+  #footerdiv hr{
+    color: #B40404;
+  }
+    #maillink {
+      text-decoration: none;
+      font-size: 2.5rem;
+      color: #000000;
+      border-bottom: 6px solid #000000;   
+  }
+  #maillink:hover {
+      border-bottom: 6px solid #7B241C;   
+  }
+  
+  #linkflex {
+   margin: auto auto 20px auto; 
+   display: flex;
+   width: 300px;
+   height: auto;
+   justify-content: center;
+   align-items: center;
+  }
+  
+  
+  
+  #profile-link{
+    margin-left: 34px;
+    text-decoration: none;
+    width: 180px;
+    border-left:3px dotted #000000;
+    border-right:3px dotted #000000;
+    padding: 20px;
+    
+  }
+  
+  #profile-link:nth-child(1){
+    padding: 25px;
+  }
+  
+  #profile-link:hover{
+    border-left:0;
+    border-right:0;
+    border-top: 3px dotted #00BFFF;
+    border-bottom: 3px dotted #00BFFF;
+  }
+  
+  
+  @media (min-width: 500px) and  (max-width: 940px) {
+    
+     
+  .container {
+    margin:10% auto auto 4%;
+    box-sizing: border-box;
+    width: 80%;
+    height: 44%;
+    position: relative;
+    padding:10% 5%;
+    
+  }
+   h1 {
+     margin-top: 4%;
+    font-size: 2.5rem;
+  }
+   
+   
+  #card h2 {
+    text-align: center;
+    color: #da2c43;
+    text-decoration: underline;
+    font-size: 2.5rem;
+    }
+  
+    
+  #projects {
+    padding-top: 20px;
+    text-align: center;
+  }
+    
+  .project-tile {
+    height: 45vh;
+    width: 32vw;
+    padding: 5px;
+    border: 1px solid #aaa;
+    margin: auto auto 40px auto;
+    box-sizing: border-box;
+  }
+  
+  .project-tile:hover {
+    height: 45vh;
+    width: 32vw;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 2px solid #aaa;
+    box-shadow: 8px 8px 5px #c0c0c0;
+    border-radius: 1%;
+  }
+  
+  
+  figure {
+    width: 100%;
+    height: 100%;
+    }
+    
+  figure img {
+    width: 100%;
+    height: 86%;
+  }
+    .project-tile h3 {
+    font-size: 75%;
+     margin-top: -32px;
+      
+    }
+    
+  }
+  
+  @media (min-width: 280px) and  (max-width: 500px) {
+    
+   
+  nav ul li {
+    border: 2px solid #000000;
+    padding: 10px 2px 0 2px;
+    text-transform: capitalize;
+    height: 30px;
+    width: auto;
+    font-size: 1.7rem;
+    }   
+  .container {
+    margin:7% auto auto 3%;
+    box-sizing: border-box;
+    width: 86%;
+    height: 44%;
+    position: relative;
+    padding:10% 5%;
+    
+  }
+   h1 {
+     margin-top: 4%;
+    font-size: 1.6rem;
+     font-weight: bold;
+  }
+    #text {
+     font-size: 1.5rem; 
+      
+    } 
+   
+  #card h2 {
+    text-align: center;
+    color: #da2c43;
+    text-decoration: underline;
+    font-size: 2rem;
+    }
+    
+    #flipy {
+     font-size: 1rem; 
+      
+    }  
+  
+  
+  #projects {
+    padding-top: 20px;
+    text-align: center;
+  }
+    
+  .project-tile {
+    height: 38vh;
+    width: 32vw;
+    padding: 1%;
+    border: 1px solid #aaa;
+    margin: auto auto 40px auto;
+    box-sizing: border-box;
+    overflow: hidden;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888;
+    border-radius: 10px;
+  }
+  
+  .project-tile:hover {
+    height: 38vh;
+    width: 32vw;
+    box-sizing: border-box;
+    padding: 1%;
+    border: 2px solid #aaa;
+    box-shadow: 8px 8px 5px #c0c0c0;
+    border-radius: 1%;
+  }
+  
+  
+  figure {
+    width: 100%;
+    height: 100%;
+    }
+    
+  figure img {
+    width: 100%;
+    height: 86%;
+  }
+    .project-tile h3 {
+    font-size: 1rem;
+    margin-top: -28px;
+      
+    }
+  
+    
+    #linkflex {
+   margin: auto ; 
+   display: flex;
+   width: 50%;
+   height: auto;
+   justify-content: center;
+   align-items: center;
+  }
+  
+    
+    
+  #profile-link{
+    margin:auto auto 26px 10px;
+    text-decoration: none;
+    width: 30%;
+    border-left:3px dotted #000000;
+    border-right:3px dotted #000000;
+    padding: 14%;
+    
+  }
+  
+  #profile-link{
+    margin-left: 6%;
+    text-decoration: none;
+    width: 100%;
+    border-left:3px dotted #000000;
+    border-right:3px dotted #000000;
+    padding: 7%;
+    
+  }
+  
+  #profile-link:nth-child(1){
+    padding: 9%;
+  }
+  
+  #profile-link:hover{
+    border-left:0;
+    border-right:0;
+    border-top: 3px dotted #00BFFF;
+    border-bottom: 3px dotted #00BFFF;
+  }
+  
+  
+   #maillink {
+      text-decoration: none;
+      font-size: 2rem;
+      color: #000000;
+      border-bottom: 2px solid #000000;   
+  }
+  #maillink:hover {
+      border-bottom: 2px solid #7B241C;   
+  }
+    
+  }
+  
